@@ -4,8 +4,9 @@ import SpotifyWebApi from 'spotify-web-api-js';
 import axios from "axios";
 import { getReturnedParamsFromSpotifyAuth, loginUrl } from './logic/spotifyAccess';
 
-const playlist_names = []
+let spotifyApi = new SpotifyWebApi();
 
+let playlist_names = []
 function App() {
   const [prompt, setPrompt] = useState("");
   const [response, setResponse] = useState("");
@@ -17,10 +18,12 @@ function App() {
       localStorage.setItem("tokenType", token_type);
       localStorage.setItem("expiresIn", expires_in)
     }
-
-    let spotifyApi = new SpotifyWebApi();
     spotifyApi.setAccessToken(localStorage.getItem('accessToken'));
     
+    getPlaylists()
+  })
+  
+  const getPlaylists = () => {
     spotifyApi
       .getUserPlaylists() // note that we don't pass a user id
       .then(
@@ -33,8 +36,7 @@ function App() {
           console.error(err);
         }
       );
-    console.log(playlist_names)
-  })
+  }
   const handleLogin = () => {
     window.location = loginUrl
   }
@@ -51,21 +53,22 @@ function App() {
         console.error(err);
       });
   };
+
   return (
     <div className="App">
       <header className="App-header">
         <button onClick = {handleLogin}>log in to spotify</button>
         <div>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          value={prompt}
-          onChange={(e) => setPrompt(e.target.value)}
-        />
-        <button type="submit">Submit</button>
-      </form>
-      <p>{response}</p>
-    </div>
+          <form onSubmit={handleSubmit}>
+            <input
+              type="text"
+              value={prompt}
+              onChange={(e) => setPrompt(e.target.value)}
+            />
+            <button type="submit">Submit</button>
+          </form>
+          <p>{response}</p>
+        </div>
       </header>
     </div>
   );
