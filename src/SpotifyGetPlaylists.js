@@ -8,7 +8,7 @@ const SpotifyGetPlaylists = () => {
         if (localStorage.getItem("accessToken")) {
             setToken(localStorage.getItem("accessToken"))
         }
-    }, [])
+    }, []);
 
     const handleGetPlaylists = () => {
         console.log(token)
@@ -22,6 +22,7 @@ const SpotifyGetPlaylists = () => {
             setData(response.data)
         })
         .catch((error) => console.log(error))
+
         axios.get(" 	https://api.spotify.com/v1/playlists/5LjgYuUQ74DB6M69k90d6p/tracks", {
             headers: {
                 Authorization: "Bearer " + token,
@@ -32,13 +33,14 @@ const SpotifyGetPlaylists = () => {
         })
         .catch((error) => console.log(error))
         console.log(data)
-    }
+    };
+
     return (
         <button onClick={handleGetPlaylists}>
             get Playlists
             {data.items ? data.items.map((item) => <p>{item.name}</p>) : null}
         </button>
-    )
-}
+    );
+};
 
-export default SpotifyGetPlaylists
+export default SpotifyGetPlaylists;
