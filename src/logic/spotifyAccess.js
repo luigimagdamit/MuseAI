@@ -5,10 +5,11 @@ const SPACE_DELIMITER = '%20'
 const SCOPES = [
   "user-read-currently-playing",
   "user-read-playback-state",
-  "user-top-read",
   "user-read-private",
   "user-read-recently-played",
-  "user-read-email"
+  "user-read-email",
+  "playlist-read-private",
+  "user-top-read",
 ]
 const SCOPES_URL_PARAM = SCOPES.join(SPACE_DELIMITER);
 
